@@ -17,7 +17,7 @@ $me = "?page=$source";
                             <div class='float-right'>
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                     data-target="#add">
-                                    Add New Train &#128645;
+                                    Add New Train
                                 </button></div>
                         </div>
 

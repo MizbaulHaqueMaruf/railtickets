@@ -17,7 +17,7 @@ $me = "?page=$source"
                             <div class='float-right'>
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                     data-target="#add">
-                                    Add New Route &#128645;
+                                    Add New Route
                                 </button></div>
                         </div>
 

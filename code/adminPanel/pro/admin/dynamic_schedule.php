@@ -40,7 +40,6 @@ $me = "?page=$source";
                                         <th>Shulov Fee</th>
                                         <th>Berth Fee</th>
                                         <th>AC Fee</th>
-                                        <!-- <th>Total Bookings</th> -->
                                         <th>Date/Time</th>
                                         <th>Actions</th>
                                     </tr>
@@ -61,9 +60,7 @@ $me = "?page=$source";
                                         <td>BDT <?php echo ($fetch['SHULOV']); ?></td>
                                         <td>BDT <?php echo ($fetch['BERTH']); ?></td>
                                         <td>BDT <?php echo ($fetch['AC']); ?></td>
-                                        <!-- <td><?php //$array = getTotalBookByType($id);
-                                               // echo (($array['first'] - $array['first_booked'])), " Seat(s) Available for First Class" . "<hr/>" . ($array['second'] - $array['second_booked']) . " Seat(s) Available for Second Class";
-                                                ?></td> -->
+
                                         <td><?php echo $fetch['date'], " / ", formatTime($fetch['time']); ?></td>
 
                                         <td>
@@ -76,7 +73,7 @@ $me = "?page=$source";
                                                 <input type="hidden" class="form-control" name="del_train"
                                                     value="<?php echo $id ?>" required id="">
                                                 <button type="submit"
-                                                    onclick="return confirm('Are you sure about this?')"
+                                                    onclick="return confirm('Are you sure?')"
                                                     class="btn btn-danger">
                                                     Delete
                                                 </button>
@@ -193,85 +190,7 @@ $me = "?page=$source";
 </section>
 </div>
 
-<!-- <div class="modal fade" id="add">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" align="center">
-            <div class="modal-header">
-                <h4 class="modal-title">Add New Schedule 
-                </h4>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            Train : <select class="form-control" name="train_id" required id="">
-                                <option value="">Select Train</option>
-                                <?php
-                               /* $con = connect()->query("SELECT * FROM train");
-                                while ($row = $con->fetch_assoc()) {
-                                    echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
-                                }*/
-                                ?>
-                            </select>
-
-                        </div>
-                        <div class="col-sm-6">
-                            Route : <select class="form-control" name="route_id" required id="">
-                                <option value="">Select Route</option>
-                                <?php
-                                /*$con = connect()->query("SELECT * FROM route");
-                                while ($row = $con->fetch_assoc()) {
-                                    echo "<option value='" . $row['id'] . "'>" . getRoutePath($row['id']) . "</option>";
-                                }*/
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            SHOVON Charge : <input class="form-control" type="number" name="SHOVON" required
-                                id="">
-                        </div>
-                        <div class="col-sm-6">
-
-                            SHULOV Class Charge : <input class="form-control" type="number" name="SHULOV" required
-                                id="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            Date : <input class="form-control" onchange="check(this.value)" type="date" name="date"
-                                required id="date">
-                        </div>
-                        <div class="col-sm-6">
-
-                            Time : <input class="form-control" type="time" name="time" required id="">
-                        </div>
-                    </div>
-                    <hr>
-                    <input type="submit" name="submit" class="btn btn-success" value="Add Schedule"></p>
-                </form>
-
-                <script>
-                function check(val) {
-                    val = new Date(val);
-                    var age = (Date.now() - val) / 31557600000;
-                    var formDate = document.getElementById('date');
-                    if (age > 0) {
-                        alert("Past/Current Date not allowed");
-                        formDate.value = "";
-                        return false;
-                    }
-                }
-                </script>
-
-            </div>
-
-        </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
@@ -343,7 +262,7 @@ $me = "?page=$source";
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6"> Every :
+                        <!-- <div class="col-sm-6"> Every :
                             <select class="form-control" name="every">
                                 <option value="Day">Day</option>
                                 <option value="Monday">Monday</option>
@@ -354,7 +273,7 @@ $me = "?page=$source";
                                 <option value="Saturday">Saturday</option>
                                 <option value="Sunday">Sunday</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="col-sm-6">
 
                             Time : <input class="form-control" type="time" name="time" required id="">
@@ -386,27 +305,7 @@ $me = "?page=$source";
 </div>
 <?php
 
-// if (isset($_POST['submit'])) {
-//     $route_id = $_POST['route_id'];
-//     $train_id = $_POST['train_id'];
-//     $first_fee = $_POST['SHOVON'];
-//     $second_fee = $_POST['SHULOV'];
-//     $date = $_POST['date'];
-//     $date = formatDate($date);
-//     // die($date);
-//     // $endDate = date('Y-m-d' ,strtotime( $data['automatic_until'] ));
-//     $time = $_POST['time'];
-//     if (!isset($route_id, $train_id, $first_fee, $second_fee, $date, $time)) {
-//         alert("Fill Form Properly!");
-//     } else {
-//         $conn = connect();
-//         $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `first_fee`, `second_fee`) VALUES (?,?,?,?,?,?)");
-//         $ins->bind_param("iissii", $train_id, $route_id, $date, $time, $first_fee, $second_fee);
-//         $ins->execute();
-//         alert("Schedule Added!");
-//         load($_SERVER['PHP_SELF'] . "$me");
-//     }
-// }
+
 
 
 if (isset($_POST['submit2'])) {
@@ -473,11 +372,7 @@ if (isset($_POST['edit'])) {
         $ins = $conn->prepare("UPDATE `schedule` SET `train_id`=?,`route_id`=?,`date`=?,`time`=?,`SHOVON`=?,`SHULOV`=?,`BERTH`=?,`AC`=? WHERE id = ?");
         $ins->bind_param("iissiiiii", $train_id, $route_id, $date, $time, $first_fee, $second_fee, $third_fee, $fourth_fee, $id);
         $ins->execute();
-        // $msg = "Having considered user's satisfactions and every other things, we the management are so sorry to let inform you that there has been a change in the date and time of your trip. <hr/> New Date : $date. <br/> New Time : ".formatTime($time)." <hr/> Kindly disregard if the date/time still stays the same.";
-        // $e = $conn->query("SELECT passenger.email FROM passenger INNER JOIN booked ON booked.user_id = passenger.id WHERE booked.schedule_id = '$id' ");
-        // while($getter = $e->fetch_assoc()){
-        //     @sendMail($getter['email'], "Change In Trip Date/Time", $msg);
-        // }
+
         alert("Schedule Modified!");
         load($_SERVER['PHP_SELF'] . "$me");
     }
