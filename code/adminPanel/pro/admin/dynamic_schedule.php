@@ -330,22 +330,22 @@ if (isset($_POST['submit2'])) {
         $startDate = $from_date;
         $endDate = $to_date;
         $conn = connect();
-        if ($every == 'Day') {
+        //if ($every == 'Day') {
             for ($i = strtotime($startDate); $i <= strtotime($endDate); $i = strtotime('+1 day', $i)) {
                 $date = date('d-m-Y', $i);
                 $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES (?,?,?,?,?,?,?,?)");
                 $ins->bind_param("iissiiii", $train_id, $route_id, $date, $time, $first_fee, $second_fee, $third_fee, $fourth_fee);
                 $ins->execute();
-            }
-        } else {
-            for ($i = strtotime($every, strtotime($startDate)); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
-                $date = date('d-m-Y', $i);
+        //    }
+        // } else {
+        //     for ($i = strtotime($every, strtotime($startDate)); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
+        //         $date = date('d-m-Y', $i);
 
-                $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES (?,?,?,?,?,?,?,?)");
-                $ins->bind_param("iissiiii", $train_id, $route_id, $date, $time, $first_fee, $second_fee, $third_fee, $fourth_fee);
-                $ins->execute();
-            }
-        }
+        //         $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES (?,?,?,?,?,?,?,?)");
+        //         $ins->bind_param("iissiiii", $train_id, $route_id, $date, $time, $first_fee, $second_fee, $third_fee, $fourth_fee);
+        //         $ins->execute();
+        //     }
+         }
 
 
         alert("Schedules Added!");
