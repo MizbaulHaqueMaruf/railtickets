@@ -12,6 +12,15 @@ mysqli_select_db($conn,"$db_name") or die("cannot select db");
 $tostn = '';
 $fromstn = '';
 $doj = '';
+$sql2="Select Distinct start, stop from $tbl_name";
+$result=mysqli_query($conn,$sql2);
+$station_from=array();
+$station_to=array();
+while($row=mysqli_fetch_assoc($result)){
+		$station_from[]=$row['start'];
+		$station_to[]=$row['stop'];
+}
+
 if(isset($_POST['from']) && isset($_POST['to']))
 {	$k=1;
 	$doj = $_POST['date'];
@@ -22,11 +31,12 @@ if(isset($_POST['from']) && isset($_POST['to']))
 	if(mysqli_num_rows($result)>0){
 			$output=mysqli_fetch_assoc($result);
 			$route_id=$output['id'];
+			echo $route_id;
 			$sql2="SELECT schedule.id as schedule_id , schedule.train_id, schedule.route_id,
 			schedule.date,schedule.time,schedule.SHOVON, schedule.SHULOV, schedule.BERTH,
 			schedule.AC,train.Number,train.name,route.id, route.start,route.stop   
 			from (schedule,train,route) 
-			WHERE (schedule.route_id= route.id And train.Number= schedule.train_id And schedule.date ='$doj')";
+			WHERE (schedule.route_id='$route_id' And route.id ='$route_id' And train.Number= schedule.train_id And schedule.date ='$doj')";
 			$result=mysqli_query($conn, $sql2);
 	}
 }
@@ -34,6 +44,10 @@ else if((!isset($_POST['from'])) && (!isset($_POST['to'])))
 {	$k=0;
 	$from="";
 	$to="";
+}
+
+if(isset($_POST['passenger_count'])){
+	$_SESSION['passenger_count']=$_POST['passenger_count'];
 }
 ?>
 
@@ -80,7 +94,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 			<?php  
 			 if(isset($_SESSION['name']))
 			 {
-				echo "Welcome, ".$_SESSION['name']."&nbsp;&nbsp;&nbsp;<a href=\"logout.php\" class=\"btn btn-info\">Logout</a>";
+				echo "Welcome, ".$_SESSION['f_name']."&nbsp;&nbsp;&nbsp;<a href=\"logout.php\" class=\"btn btn-info\">Logout</a>";
 			 }
 			 else
 			 {
@@ -145,17 +159,95 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 			<div style="margin-top: 50px">
 				<tr>
 					<th style="border-top:0px;"><label> From <label></th>
-					<td style="border-top:0px;"><input type="text" class="input-block-level" name="from" id="fr" ></td>
+					<td style="border-top:0px;">
+					<select name="from" id="fr" >
+					<?php
+					if (isset($_POST['from'])) {
+       				 // User has made a selection
+      		    	  $selected_option = $_POST['from'];
+     			   for ($i = 0; $i <sizeof($station_from); $i++) {
+            		if ($i == $selected_option) {
+               			 // Output the selected option
+               			 echo '<option value="' . $station_from[$i] . '" selected>' . $station_from[$i] . '</option>';
+            		} else {
+              			  // Output the other options
+              		  echo '<option value="' . $station_from[$i] . '">' . $station_from[$i] . '</option>';
+           			 }
+        			}
+    				} else {
+      				  // User has not made a selection
+        			// Output nothing
+					  for ($i = 0; $i <sizeof($station_from); $i++) {
+									// Output the selected option
+									echo '<option value="' . $station_from[$i] . '" selected>' . $station_from[$i] . '</option>';
+    					}
+					}
+					?>
+					</select>
+					</td>
 				</tr>
 				<tr>
 					<th style="border-top:0px;"><label> To <label></th>
-					<td style="border-top:0px;"><input type="text" class="input-block-level" name="to" id="to1" ></td>
+					<td style="border-top:0px;">
+					<select name="to" id="to1" >
+					<?php
+					if (isset($_POST['to'])) {
+       				 // User has made a selection
+      		    	  $selected_option = $_POST['to'];
+     			   for ($i = 0; $i <sizeof($station_to); $i++) {
+            		if ($i == $selected_option) {
+               			 // Output the selected option
+               			 echo '<option value="' . $station_to[$i] . '" selected>' . $station_to[$i] . '</option>';
+            		} else {
+              			  // Output the other options
+              		  echo '<option value="' . $station_to[$i] . '">' . $station_to[$i] . '</option>';
+           			 }
+        			}
+    				} else {
+      				  // User has not made a selection
+        			// Output nothing
+					for ($i = 0; $i <sizeof($station_to); $i++) {
+						// Output the selected option
+						echo '<option value="' . $station_to[$i] . '" selected>' . $station_to[$i] . '</option>';
+						}
+    					}
+					?>
+					</select>
+					</td>
 				</tr>
+				<tr>
+    				<th style="border-top:0px"><label>Number of passengers:</label></th>
+    				<td>
+					<select name="passenger_count" id="passenger_count">
+    				<?php
+    				if (isset($_POST['passenger_count'])) {
+       				 // User has made a selection
+      		    	  $selected_option = $_POST['passenger_count'];
+     			   for ($i = 1; $i <= 5; $i++) {
+            		if ($i == $selected_option) {
+               			 // Output the selected option
+               			 echo '<option value="' . $i . '" selected>' . $i . '</option>';
+            		} else {
+              			  // Output the other options
+              		  echo '<option value="' . $i . '">' . $i . '</option>';
+           			 }
+        			}
+    				} else {
+      				  // User has not made a selection
+        			// Output nothing
+					for ($i = 1; $i <=5; $i++) {
+						// Output the selected option
+						echo '<option value="' . $i. '" selected>' . $i . '</option>';
+						}
+    					}
+    				?>
+				</select>
+    			</td>
+				<tr>
 				<tr>
 					<th style="border-top:0px;"><label> Date<label></th>
 					<td style="border-top:0px;"><input type="date" class="input-block-level input-medium" name="date" max="<?php echo date('Y-m-d',time()+60*60*24*90);?>" min="<?php echo date('Y-m-d')?>" value="<?php if(isset($_POST['date'])){echo $_POST['date'];}else {echo date('Y-m-d');}?>"> </td>
 				</tr>
-				<tr>
 					<td style="border-top:0px;"><input class="btn btn-info" type="submit" value="OK"></td>
 					<td style="border-top:0px;"><a href="reservation.php" class="btn btn-info" type="reset" value="Reset">Reset</a></td>
 				</tr>
@@ -165,7 +257,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 			</div>
 			</div>
 		<!-- display train -->
-		<div style="position: absolute; top:450px;background: rgb(205,212,211);
+		<div style="position: absolute; top:480px;background: rgb(205,212,211);
 background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1) 100%, rgba(95,152,153,1) 100%, rgba(24,133,128,0.40129555240064774) 100%, rgba(20,153,212,0.8382703423166141) 100%, rgba(67,111,120,0.45171572046787467) 100%, rgba(18,150,176,0.342472022988883) 100%);">
 			<div class="span8 well">
 				<div class="display" style="height:30px;">
@@ -191,7 +283,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 						
 						echo "<script> document.getElementById(\"fr\").value=\"$from\";
 									   document.getElementById(\"to1\").value=\"$to\";
-									   
+
 							</script>";
 						$n=0;
 						while($row=mysqli_fetch_array($result)){
@@ -207,7 +299,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 							$fromstn=$row['start'];
 							$tostn=$row['stop'];
 							$schedule=$row['schedule_id'];
-					
+							$passenger_count=$_POST['passenger_count'];
 				
 				?>
 				<tr class="text-error">
@@ -218,11 +310,19 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 					<td style="width:75px;"> <?php   echo  $q; ?> </td>
 					<td style="width:65px;"> <?php   echo  $d; ?> </td>
 					<td style="width:200px;">  
-					<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>&schedule=<?php echo $schedule ?>&class=<?php echo "SHOVON";?>"><b>SHOVON</b> </a> 
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>&schedule=<?php echo $schedule ?>?>&class=<?php echo "SHULOV";?>"><b>SHULOV</b></a>
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>&schedule=<?php echo $schedule ?>?>&class=<?php echo "BERTH";?>"><b>BERTH</b></a>
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>&schedule=<?php echo $schedule ?>?>&class=<?php echo "AC";?>"><b>AC</b></a>
-						
+					<?php
+						 $sql_for_seat_num="Select * from schedule where id=$schedule";
+						 $output=mysqli_query($conn,$sql_for_seat_num);
+						 $seat_num=mysqli_fetch_assoc($output);
+						 if($seat_num['SHOVON']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=SHOVON"><b>SHOVON</b> </a>';
+						 if($seat_num['SHULOV']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=SHULOV"><b>SHULOV</b> </a>';
+						 if($seat_num['BERTH']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=BERTH"><b>BERTH</b> </a>';
+						 if($seat_num['AC']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=AC"><b>AC</b> </a>';
+						?>
 					</td>
 					</tr>
 				<?php  
@@ -249,10 +349,20 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 					<td style="width:75px;"> <?php  echo $q; ?> </td>
 					<td style="width:65px;"> <?php  echo $d; ?> </td>
 					<td style="width:200px;">
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>?>&schedule=<?php echo $schedule ?>&class=<?php echo "SHOVON";?>"><b>SHOVON</b> </a> 
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>?>&schedule=<?php echo $schedule ?>&class=<?php echo "SHULOV";?>"><b>SHULOV</b></a>
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>?>&schedule=<?php echo $schedule ?>&class=<?php echo "BERTH";?>"><b>BERTH</b></a>
-						<a class="text-info" href="reser.php?tno=<?php echo$row['Number']?>&fromstn=<?php echo $fromstn ?>&tostn=<?php echo $tostn ?>&doj=<?php echo $doj ?>?>&schedule=<?php echo $schedule ?>&class=<?php echo "AC";?>"><b>AC</b></a>
+						<?php
+						 $sql_for_seat_num="Select * from schedule where id=$schedule";
+						 $output=mysqli_query($conn,$sql_for_seat_num);
+						 $seat_num=mysqli_fetch_assoc($output);
+						if($seat_num['SHOVON']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=SHOVON"><b>SHOVON</b> </a>';
+					
+						if($seat_num['SHULOV']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=SHULOV"><b>SHULOV</b> </a>';
+						if($seat_num['BERTH']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=BERTH"><b>BERTH</b> </a>';
+						if($seat_num['AC']>=$_POST['passenger_count'])
+							 echo '<a class="text-info" href="reser.php?tno=' . $row['Number'] . '&fromstn=' . $fromstn . '&tostn=' . $tostn . '&doj=' . $doj . '&schedule=' . $schedule . '&class=AC"><b>AC</b> </a>';
+						?>
 					</td>
 				</tr>
 				<?php  
