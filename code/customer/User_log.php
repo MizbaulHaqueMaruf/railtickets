@@ -32,10 +32,10 @@ else
 		$sql2="Select * from users where email='$uname'";
 		$user_info=mysqli_query($conn,$sql2);
 		$user_info_output=mysqli_fetch_assoc($user_info);
-		$first_name=$user_info_output['f_name'];
-		$last_name=$user_info_output['l_name'];
-		$_SESSION['f_name']=$first_name;
-		$_SESSION['l_name']=$last_name;
+		$firstname=$user_info_output['f_name'];
+		$lastname=$user_info_output['l_name'];
+		$_SESSION['f_name']=$firstname;
+		$_SESSION['l_name']=$lastname;
 		header("location:reservation.php");    //
 	}
 	else{
