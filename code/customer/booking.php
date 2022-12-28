@@ -1,6 +1,4 @@
 <?php
-
-
 session_start();
 require('connection.php');
 if(isset($_SESSION['name'])){}
@@ -40,14 +38,15 @@ $sql="INSERT INTO $tbl_name(user_email,user_id,schedule_id,no,class,code,date,se
 $result=$conn->query($sql);
 	echo "$sql</br>";
 	if(!$result) die ($conn->error);
-	$sql2="Select $class from schedule where train_id='$num'";
+	$_SESSION['class']=$class;
+	$sql2="Select $class from seats_info where train_number='$num' And schedule_id='$schedule_id'";
 	echo "</br>".$sql2."</br>";
 	$value=$conn->query($sql2);	
 	$set=mysqli_fetch_assoc($value);
 	echo "<br>".$set[$class]."</br>";
 	$set_seat=$set[$class]-$_SESSION['passenger_count'];
 	echo "<br>".$set_seat."</br>";
-	$sql2="UPDATE schedule SET $class=$set_seat where id='$schedule_id'";
+	$sql2="UPDATE seats_info SET $class=$set_seat where id='$schedule_id' and train_number='$num' And schedule_id='$schedule_id'";
 	$result2=$conn->query($sql2);
 	echo "</br>".$sql2."</br>";
 	if(!$result2) die ($conn->error);

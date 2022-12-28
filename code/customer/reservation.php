@@ -20,7 +20,6 @@ while($row=mysqli_fetch_assoc($result)){
 		$station_from[]=$row['start'];
 		$station_to[]=$row['stop'];
 }
-
 if(isset($_POST['from']) && isset($_POST['to']))
 {	$k=1;
 	$doj = $_POST['date'];
@@ -33,11 +32,13 @@ if(isset($_POST['from']) && isset($_POST['to']))
 			$route_id=$output['id'];
 			echo $route_id;
 			$sql2="SELECT schedule.id as schedule_id , schedule.train_id, schedule.route_id,
-			schedule.date,schedule.time,schedule.SHOVON, schedule.SHULOV, schedule.BERTH,
-			schedule.AC,train.Number,train.name,route.id, route.start,route.stop   
-			from (schedule,train,route) 
-			WHERE (schedule.route_id='$route_id' And route.id ='$route_id' And train.Number= schedule.train_id And schedule.date ='$doj')";
+			schedule.date,schedule.time,seats_info.SHOVON, seats_info.SHULOV, seats_info.BERTH,
+			seats_info.AC,train.Number,train.name,route.id, route.start,route.stop   
+			from (schedule,train,route,seats_info) 
+			WHERE (schedule.route_id='$route_id' And route.id ='$route_id' And seats_info.route_id='$route_id'And seats_info.schedule_id=schedule.id And train.Number= schedule.train_id And schedule.date ='$doj'
+			And seats_info.date='$doj')";
 			$result=mysqli_query($conn, $sql2);
+			$_SESSION['date']=$doj;
 	}
 }
 else if((!isset($_POST['from'])) && (!isset($_POST['to'])))
@@ -311,7 +312,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 					<td style="width:65px;"> <?php   echo  $d; ?> </td>
 					<td style="width:200px;">  
 					<?php
-						 $sql_for_seat_num="Select * from schedule where id=$schedule";
+						 $sql_for_seat_num="Select * from seats_info where schedule_id=$schedule";
 						 $output=mysqli_query($conn,$sql_for_seat_num);
 						 $seat_num=mysqli_fetch_assoc($output);
 						 if($seat_num['SHOVON']>=$_POST['passenger_count'])
@@ -350,7 +351,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
 					<td style="width:65px;"> <?php  echo $d; ?> </td>
 					<td style="width:200px;">
 						<?php
-						 $sql_for_seat_num="Select * from schedule where id=$schedule";
+						 $sql_for_seat_num="Select * from seats_info where schedule_id=$schedule";
 						 $output=mysqli_query($conn,$sql_for_seat_num);
 						 $seat_num=mysqli_fetch_assoc($output);
 						if($seat_num['SHOVON']>=$_POST['passenger_count'])
