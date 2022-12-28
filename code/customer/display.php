@@ -1,6 +1,13 @@
 <?php
 	session_start();
-	
+///email $_SESSION['name']
+//first name $_SESSION['f_name']
+//last name $_SESSION['l_name']
+//passenger number $_SESSION['passenger-count']
+//schedule id $_SESSION['schedule']
+//date of journey $_SESSION['date']
+//pnr $_SESSION['pnr']
+// class name $_SESSION['class']
 require('connection.php');
 if(isset($_SESSION['name'])){}
 	else{
@@ -182,7 +189,45 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 				}
 				?>
 				</table>
-				</div>
+    			<style>
+    			table {
+      			  border-collapse: collapse;
+       			 width: 75%;
+       			 margin: 0 auto;
+    			}
+				th, td {
+       			 border: 1px solid black;
+       			 padding: 10px;
+        		 text-align: left;
+    			}
+			    th {
+     		    background-color: lightblue;
+        	    font-weight: bold;
+			    }
+				
+               </style>
+				<table>
+   				 <tr>
+      			  <th>Total Fare</th>
+    			  </tr>
+    			<tr>
+        		<td>
+				<?php
+  					  // Output the content here
+				  $schedule_id= $row2['schedule_id'];
+				  $class_name= $_SESSION['class'];
+				  $sql="Select $class_name from schedule where id=$schedule_id";
+				  $result=mysqli_query($conn, $sql);
+				  $seat_fare=mysqli_fetch_assoc($result);
+				  $number_of_passengers=$_SESSION['passenger_count'];
+				  echo '<br>'."Total number of passengers :".' '.$number_of_passengers.'<br>';
+				  echo '<br>'."Ticket fare (per person) :".' '.$seat_fare[$class_name].'<br>';
+				  echo '<br>'."Total amount :".' '.' '.' '.$number_of_passengers*$seat_fare[$class_name].'<br>';
+				  $_SESSION['total_fare']=$number_of_passengers*$seat_fare[$class_name];
+				?>
+        	</td>
+    		</tr>
+			</table>
 				<style>
     				.pay-now-button {
       							/* Add some styling to the button */
@@ -192,7 +237,7 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
     						    padding: 15px 32px; /* Some padding */
       							text-align: center; /* Center the text */
       							text-decoration: none; /* Remove underline from link */
-								margin-top:200px;
+								margin-top:40px;
 								display: inline-block; /* Make the button a block-level element */
       							font-size: 16px; /* Increase font size */
       							border-radius: 5px; /* Add rounded corners */
@@ -202,7 +247,18 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 						text-align: center;
 					}
   				</style>
-				
+				<style>
+   				 pre {
+      			  font-size: 18px;
+        		  font-family: Arial, sans-serif;
+        		  color: green;
+        		  background-color: lightblue;
+        		  padding: 10px;
+        		  margin: 10px;
+        		  border: 1px solid green;
+        		  border-radius: 10px;
+   				 }
+				</style>
 				<body>
 				<a href="payment.php" class="pay-now-button">Pay Now</a>
 				<body>
