@@ -153,6 +153,12 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 			 	$pnr = $_SESSION['pnr'];
 				$first_name=$_SESSION['f_name'];
 				$last_name=$_SESSION['l_name'];
+
+				//$_SESSION['f_name'] = $first_name;
+
+				while($row=mysqli_fetch_array($result)){
+					if($n%2!=0)
+					{
 				?>
 				<tr class="text-error">
 					<th style="width:10px;"> <?php echo $row2['id'];?> </th>
@@ -239,7 +245,7 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
    				 }
 				</style>
 				<body>
-				<a href="payment.php" class="pay-now-button">Pay Now</a>
+				<a href="payment/checkout.php?price=<?php echo $?>" class="pay-now-button">Pay Now</a>
 				<body>
 			</div>
 		</div>

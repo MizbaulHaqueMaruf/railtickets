@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2022 at 04:12 PM
+-- Generation Time: Dec 28, 2022 at 10:51 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -32,8 +32,8 @@ CREATE TABLE `admin` (
   `l_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `code` int(11),
-  `status` varchar(50) 
+  `code` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`f_name`, `l_name`, `email`, `password`, `code`, `status`) VALUES
-('Samin', 'Sadaf', 'saminsadaf7@gmail.com', '$2y$10$Of44wNBE1JqXSuuIZP3nOOEN2I7yKSWIh5Wi5zS8zdA13TsrfvwCG', 0, 'verified');
+('Samin', 'Sadaf', 'saminsadaf7@gmail.com', '$2y$10$/u3X83/2LGIg42vgStoc2OX/9.XAVv/xDyAUzpWtKikShVWT7uPSe', 0, 'verified');
 
 -- --------------------------------------------------------
 
@@ -56,10 +56,17 @@ CREATE TABLE `booked` (
   `user_id` int(11) NOT NULL,
   `code` varchar(100) NOT NULL,
   `class` varchar(10) NOT NULL,
-  `no` int(11) NOT NULL DEFAULT 1,
+  `no` int(11) NOT NULL,
   `seat` varchar(30) NOT NULL,
-  `date` varchar(40) NOT NULL
+  `date` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `booked`
+--
+
+INSERT INTO `booked` (`id`, `schedule_id`, `user_email`, `user_id`, `code`, `class`, `no`, `seat`, `date`) VALUES
+(1, 2, 'saminsadaf7@gmail.com', 1, '2022-12-2863AC0F', 'AC', 1, 'AC', '2022-12-28');
 
 -- --------------------------------------------------------
 
@@ -106,7 +113,8 @@ CREATE TABLE `route` (
 --
 
 INSERT INTO `route` (`id`, `start`, `stop`) VALUES
-(1, 'Dhaka', 'Sylhet');
+(1, 'Dhaka', 'Sylhet'),
+(2, 'Rajshahi', 'Khulna');
 
 -- --------------------------------------------------------
 
@@ -131,7 +139,82 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id`, `train_id`, `route_id`, `date`, `time`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES
-(1, 1, 1, '2022-12-27', '14:30', 100, 90, 500, 300);
+(1, 1, 1, '2022-12-28', '14:50', 100, 88, 28, 85),
+(2, 2, 1, '2022-12-28', '11:30', 82, 99, 4, 89);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seats_availability`
+--
+
+CREATE TABLE `seats_availability` (
+  `date` varchar(50) NOT NULL,
+  `class` varchar(11) NOT NULL,
+  `1A` tinyint(1) NOT NULL,
+  `1B` tinyint(1) NOT NULL,
+  `1C` tinyint(1) NOT NULL,
+  `1D` tinyint(1) NOT NULL,
+  `2A` tinyint(1) NOT NULL,
+  `2B` tinyint(1) NOT NULL,
+  `2C` tinyint(1) NOT NULL,
+  `2D` tinyint(1) NOT NULL,
+  `3A` tinyint(1) NOT NULL,
+  `3B` tinyint(1) NOT NULL,
+  `3C` tinyint(1) NOT NULL,
+  `3D` tinyint(1) NOT NULL,
+  `4A` tinyint(1) NOT NULL,
+  `4B` tinyint(1) NOT NULL,
+  `4C` tinyint(1) NOT NULL,
+  `4D` tinyint(1) NOT NULL,
+  `5A` tinyint(1) NOT NULL,
+  `5B` tinyint(1) NOT NULL,
+  `5C` tinyint(1) NOT NULL,
+  `5D` tinyint(1) NOT NULL,
+  `6A` tinyint(1) NOT NULL,
+  `6B` tinyint(1) NOT NULL,
+  `6C` tinyint(1) NOT NULL,
+  `6D` tinyint(1) NOT NULL,
+  `7A` tinyint(1) NOT NULL,
+  `7B` tinyint(1) NOT NULL,
+  `7C` tinyint(1) NOT NULL,
+  `7D` tinyint(1) NOT NULL,
+  `train_id` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `seats_availability`
+--
+
+INSERT INTO `seats_availability` (`date`, `class`, `1A`, `1B`, `1C`, `1D`, `2A`, `2B`, `2C`, `2D`, `3A`, `3B`, `3C`, `3D`, `4A`, `4B`, `4C`, `4D`, `5A`, `5B`, `5C`, `5D`, `6A`, `6B`, `6C`, `6D`, `7A`, `7B`, `7C`, `7D`, `train_id`, `schedule_id`) VALUES
+('2022-12-28', 'SHOVON', 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seats_info`
+--
+
+CREATE TABLE `seats_info` (
+  `id` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL,
+  `train_number` int(11) NOT NULL,
+  `route_id` int(11) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `SHOVON` int(11) NOT NULL,
+  `SHULOV` int(11) NOT NULL,
+  `BERTH` int(11) NOT NULL,
+  `AC` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `seats_info`
+--
+
+INSERT INTO `seats_info` (`id`, `schedule_id`, `train_number`, `route_id`, `date`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES
+(1, 1, 1, 1, '2022-12-28', 94, 95, 11, 90),
+(2, 2, 2, 1, '2022-12-28', 300, 100, 4, 85);
 
 -- --------------------------------------------------------
 
@@ -153,7 +236,8 @@ CREATE TABLE `train` (
 --
 
 INSERT INTO `train` (`Number`, `name`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES
-(1, 'Suborno Express', 300, 100, 30, 90);
+(1, 'Suborno Express', 300, 100, 30, 90),
+(2, 'Barma Express', 100, 100, 30, 90);
 
 -- --------------------------------------------------------
 
@@ -175,6 +259,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`f_name`, `l_name`, `email`, `password`, `gender`, `dob`, `mobile`, `Identification_no`, `status`, `code`) VALUES
+('Samin', 'Sadaf', 'saminsadaf7@gmail.com', '$2y$10$KEdb1nXcpQ8gIDMhfYuwt.CrnueXpENkV7IHsyA/gnZYNwpzFroBe', 'male', '2004-12-30', 0, 0, 'verified', 0);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -188,11 +279,7 @@ ALTER TABLE `admin`
 -- Indexes for table `booked`
 --
 ALTER TABLE `booked`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `schedule_id` (`schedule_id`,`user_id`,`user_email`) USING BTREE,
-  ADD UNIQUE KEY `user_email` (`user_email`),
-  ADD KEY `schedule_id_2` (`schedule_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `counter`
@@ -224,6 +311,12 @@ ALTER TABLE `schedule`
   ADD KEY `route_id` (`route_id`);
 
 --
+-- Indexes for table `seats_info`
+--
+ALTER TABLE `seats_info`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `train`
 --
 ALTER TABLE `train`
@@ -243,7 +336,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booked`
 --
 ALTER TABLE `booked`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -255,7 +348,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `route`
 --
 ALTER TABLE `route`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `schedule`
@@ -267,7 +360,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `train`
 --
 ALTER TABLE `train`
-  MODIFY `Number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
