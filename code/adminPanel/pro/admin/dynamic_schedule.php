@@ -317,7 +317,7 @@ if (isset($_POST['submit2'])) {
     $fourth_fee = $_POST['AC'];
     $from_date = $_POST['from_date'];
     $to_date = $_POST['to_date'];
-    $every = $_POST['every'];
+    //$every = $_POST['every'];
 
     $time = $_POST['time'];
     if (!isset($route_id, $train_id, $first_fee, $second_fee, $third_fee, $fourth_fee, $date, $time)) {
@@ -336,6 +336,28 @@ if (isset($_POST['submit2'])) {
                 $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES (?,?,?,?,?,?,?,?)");
                 $ins->bind_param("iissiiii", $train_id, $route_id, $date, $time, $first_fee, $second_fee, $third_fee, $fourth_fee);
                 $ins->execute();
+
+                $sql="SELECT SHOVON, SHULOV, BERTH , AC from train where Number =$train_id";
+                $result=mysqli_query($conn, $sql);
+                $row=mysqli_fetch_assoc($result);
+                $shovon=$row['SHOVON'];
+                $shulov=$row['SHULOV'];
+                $berth=$row['BERTH'];
+                $ac=$row['AC'];
+                $schedule_finder="SELECT id from schedule where train_id = $train_id And route_id=$route_id and time='$time' and date ='$date'";
+                $result2=mysqli_query($conn,$schedule_finder);
+                $row2=mysqli_fetch_assoc($result2);
+                $schedule_id=$row2['id'];
+                $sql2="INSERT INTO `seats_info`(`schedule_id`, `train_number`, `route_id`, `date`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES ($schedule_id,$train_id,$route_id,'$date',$shovon,$shulov,$berth,$ac)";
+                $final_result=mysqli_query($conn,$sql2);
+                // $shovon = "SELECT SHOVON FROM train where Number = $train_id";
+                // $shulov = "SELECT SHULOV FROM train where Number = $train_id";
+                // $berth = "SELECT BERTH FROM train where Number = $train_id";
+                // $ac = "SELECT AC FROM train where Number = $train_id";
+                // $schedule_id = "SELECT id FROM schedule WHERE train_id = $train_id AND route_id = $route_id";
+                // $ins1 = $conn->prepare("INSERT INTO `seats_info`(`schedule_id`, `train_number`, `route_id`, `date`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES (?,?,?,?,?,?,?,?)");
+                // $ins1->bind_param("iiisiiii", $schedule_id, $train_id, $route_id, $date, $shovon, $shulov, $berth, $ac);
+                // $ins1->execute();
         //    }
         // } else {
         //     for ($i = strtotime($every, strtotime($startDate)); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
