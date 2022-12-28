@@ -46,8 +46,12 @@ session_start();
                             <a class="nav-link" href="signup.php">Register</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="../adminPanel/pro/adminreg.php">Admin Panel</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Contact Us</a>
                         </li>
+                        
                     </ul>
                 </div>
             </div>

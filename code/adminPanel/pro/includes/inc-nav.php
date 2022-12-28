@@ -11,7 +11,7 @@
                 </li>
                 <li class="<?php echo $class != 'reg' ? 'active' : '' ?>">
 
-                    <a href="signin.php">Sign In</a>
+                    <a href="adminsignin.php">Sign In</a>
 
                 <li>
                     <a href="../">Go Back</a>
