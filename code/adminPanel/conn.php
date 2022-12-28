@@ -2,7 +2,7 @@
 
 function connect()
 {
-    $conn = new mysqli("localhost", "root", "", "finalrailres");
+    $conn = new mysqli("localhost", "root", "", "finalrailres_5");
     if (!$conn) die("Database is being upgrade!");
     return $conn;
 }

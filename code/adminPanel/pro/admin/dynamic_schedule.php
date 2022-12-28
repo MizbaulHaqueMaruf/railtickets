@@ -332,7 +332,7 @@ if (isset($_POST['submit2'])) {
         $conn = connect();
         //if ($every == 'Day') {
             for ($i = strtotime($startDate); $i <= strtotime($endDate); $i = strtotime('+1 day', $i)) {
-                $date = date('d-m-Y', $i);
+                $date = date('Y-m-d', $i);
                 $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `SHOVON`, `SHULOV`, `BERTH`, `AC`) VALUES (?,?,?,?,?,?,?,?)");
                 $ins->bind_param("iissiiii", $train_id, $route_id, $date, $time, $first_fee, $second_fee, $third_fee, $fourth_fee);
                 $ins->execute();
