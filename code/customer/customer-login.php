@@ -77,10 +77,10 @@
                             </div>
                             <div class="d-flex">
 
-                                <div class="w-100 d-flex">
+                                <!-- <div class="w-100 d-flex">
 
                                     <div class="sign-in-btn d-flex mb-3">
-                                        <a href="admin-login.php" class="ms-2"><button type="button"
+                                        <a href="../adminPanel/pro/adminreg.php" class="ms-2"><button type="button"
                                                 class="btn btn-outline-danger ms-2">Admin panel</button></a>
                                         <a href="ticket-counter-login.php" class="ms-2"> <button type="button"
                                                 class="btn btn-outline-danger">Ticket Counter
@@ -89,7 +89,7 @@
 
                                     </div>
 
-                                </div>
+                                </div> -->
 
                             </div>
                             <div align="center">
