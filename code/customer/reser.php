@@ -86,6 +86,7 @@ if(isset($_SESSION['name'])){}
 			 {
 			 echo "Welcome,".$_SESSION['name']."&nbsp;&nbsp;&nbsp;<a href=\"logout.php\" class=\"btn btn-info\">Logout</a>";
 			 }
+			 $_SESSION['schedule']=$_GET['schedule'];
 			 ?>
 			
 			

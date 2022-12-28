@@ -21,25 +21,33 @@ $sex=$_GET['sex1'];
 $fromstn=$_GET[	'fromstn'];
 $tostn=$_GET['tostn'];
 $doj=$_GET['doj'];
-//$schedule_id=$_GET['schedule'];
-$sql2="Select name from users where email=".$uname."";
-//$result2=$conn->query($sql2);
-//$row=mysqli_fetch_array($result);
-//$sql1="SELECT ".$class." from schedule where train_id='".$num."";
-//$result1=$conn->query($sql1);
-//while($row1=mysqli_fetch_array($result1)){
-		//$value=$row1["".$class];
-//}
-	//$sql="INSERT INTO $tbl_name(user_email,user_id,schedule_id,no,class,date,seat)
-	//VALUES ('$uname','$row[0]','$schedule_id','$num','$class','$doj','$class'+'-A')";
-	//$result=$conn->query($sql);
-	//echo "$sql</br>";
-	//if(!$result) die ($conn->error);
-	$sql2="Select ".$class." from schedule where train_id=".$num."";
+$dob=$_GET['dob'];
+$schedule_id=$_SESSION['schedule'];
+$sql2="Select f_name,l_name from users where email='$uname'";
+$result2=$conn->query($sql2);
+$row=mysqli_fetch_array($result2);
+$sql1="SELECT '$class' from schedule where train_id='$num'";
+$result1=$conn->query($sql1);
+while($row1=mysqli_fetch_array($result1)){
+		$value=$row1["".$class];
+}
+$f_name=$row['f_name'];
+$prefix = date('Y-m-d');
+$pnr = $prefix . strtoupper(substr(uniqid(), 0, 6));
+$_SESSION['pnr']=$pnr;
+$sql="INSERT INTO $tbl_name(user_email,user_id,schedule_id,no,class,code,date,seat)
+	  VALUES ('$uname','1','$schedule_id','1','$class','$pnr','$dob','$class')";
+$result=$conn->query($sql);
+	echo "$sql</br>";
+	if(!$result) die ($conn->error);
+	$sql2="Select $class from schedule where train_id='$num'";
+	echo "</br>".$sql2."</br>";
 	$value=$conn->query($sql2);	
-	$value=mysqli_fetch_array($value);
-	$value[0]=$value[0]-1;
-	$sql2="UPDATE schedule SET ".$class."=".$value[0]." and train_id=".$num."";
+	$set=mysqli_fetch_assoc($value);
+	echo "<br>".$set[$class]."</br>";
+	$set_seat=$set[$class]-$_SESSION['passenger_count'];
+	echo "<br>".$set_seat."</br>";
+	$sql2="UPDATE schedule SET $class=$set_seat where id='$schedule_id'";
 	$result2=$conn->query($sql2);
 	echo "</br>".$sql2."</br>";
 	if(!$result2) die ($conn->error);

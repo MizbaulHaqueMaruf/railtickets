@@ -22,7 +22,7 @@ mysqli_select_db($conn,"$db_name") or die("cannot select db");
 		$tname=$row['name'];
 	}
 	$result=mysqli_query($conn,$sql);
-	$sql="SELECT * from booked, route where booked.no=route.id";
+	$sql="SELECT * from booked, route,schedule where booked.schedule_id=schedule.id AND schedule.route_id=route.id";
 	$result2=mysqli_query($conn,$sql);
 	$row2=mysqli_fetch_array($result2);
 			 if(!isset($_SESSION['name']))
@@ -74,7 +74,7 @@ mysqli_select_db($conn,"$db_name") or die("cannot select db");
 			<?php
 			 if(isset($_SESSION['name']))
 			 {
-			 echo "Welcome,".$_SESSION['name']."&nbsp;&nbsp;&nbsp;<a href=\"logout.php\" class=\"btn btn-info\">Logout</a>";
+			 echo "Welcome,".$_SESSION['f_name']."&nbsp;&nbsp;&nbsp;<a href=\"logout.php\" class=\"btn btn-info\">Logout</a>";
 			 }
 			 ?>
 			
@@ -127,24 +127,35 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 				<col width="90">
 				<col width="90">
 				<tr>
-					<th style="width:10px;border-top:0px;">SNo.</th>
-					<th style="width:100px;border-top:0px;">Train Number</th>
-					<th style="width:100px;border-top:0px;">Date Of Journey</th>
-					<th style="width:60px;border-top:0px;">From</th>
-					<th style="width:80px;border-top:0px;">To</th>
-					<th style="width:100px;border-top:0px;">Date Of Booking</th>
+					<th style="width:10px;border-top:0px;">Train No.</th>
+					<th style="width:50px;border-top:0px;">First Name</th>
+					<th style="width:50px;border-top:0px;">Last Name</th>
+					<th style="width:50px;border-top:0px;">PNR</th>
+					<th style="width:40px;border-top:0px;">Number of Passengers</th>
+					<th style="width:60px;border-top:0px;">Date Of Journey</th>
+					<th style="width:80px;border-top:0px;">From</th>
+					<th style="width:40px;border-top:0px;">To</th>
+					<th style="width:50px;border-top:0px;">Date Of Booking</th>
+					
 				</tr>	
 				<?php
 				
 				$n=1;
+				$email_id=$_SESSION['name'];
+			 	$pnr = $_SESSION['pnr'];
+				$first_name=$_SESSION['f_name'];
+				$last_name=$_SESSION['l_name'];
 				while($row=mysqli_fetch_array($result)){
 					if($n%2!=0)
 					{
 				?>
 				<tr class="text-error">
-					<th style="width:10px;"> <?php echo $n; ?> </th>
-					<th style="width:100px;"> <?php echo $row2['id']; ?> </th>
-					<th style="width:100px;"> <?php echo $row['date']; ?> </th>
+					<th style="width:10px;"> <?php echo $row2['id'];?> </th>
+					<th style="width:50px;"> <?php echo $first_name;?></th>
+					<th style="width:100px;"> <?php echo $last_name;?></th>
+					<th style="width:150px;"> <?php echo $pnr;?></th>
+					<th style="width:10px;" > <?php echo $_SESSION['passenger_count'];?> </th>
+					<th style="width:100px;"> <?php echo $row2['date']; ?> </th>
 					<th style="width:100px;"> <?php echo $row2['start']; ?> </th>
 					<th style="width:100px;"> <?php echo $row2['stop']; ?> </th>
 					<th style="width:100px;"> <?php echo $today; ?> </th>
@@ -154,24 +165,47 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 					else
 					{
 				?>
-				<tr class="text-info">
-					<td style="width:10px;"> <?php echo $n; ?> </td>
-					<th style="width:100px;"> <?php echo $row2['id']; ?> </th>
-					<th style="width:100px;"> <?php echo $row['date']; ?> </th>
+				<tr class="text-error">
+					<th style="width:10px;"> <?php echo $row2['id'];?> </th>
+					<th style="width:50px;"> <?php echo $first_name;?></th>
+					<th style="width:100px;"> <?php echo $last_name;?></th>
+					<th style="width:150px;"> <?php echo $pnr;?></th>
+					<th style="width:10px;"> <?php echo $_SESSION['passenger_count'];?> </th>
+					<th style="width:100px;"> <?php echo $row2['date']; ?> </th>
 					<th style="width:100px;"> <?php echo $row2['start']; ?> </th>
 					<th style="width:100px;"> <?php echo $row2['stop']; ?> </th>
 					<th style="width:100px;"> <?php echo $today; ?> </th>
-					</tr>
-				<?php
+				</tr>
+				<?php 
 					}
 					$n++;
 				}
 				?>
-				
-				
 				</table>
 				</div>
-
+				<style>
+    				.pay-now-button {
+      							/* Add some styling to the button */
+      							background-color: #4CAF50; /* Green background */
+      							border: none; /* Remove border */
+      							color: white; /* White text */
+    						    padding: 15px 32px; /* Some padding */
+      							text-align: center; /* Center the text */
+      							text-decoration: none; /* Remove underline from link */
+								margin-top:200px;
+								display: inline-block; /* Make the button a block-level element */
+      							font-size: 16px; /* Increase font size */
+      							border-radius: 5px; /* Add rounded corners */
+     							box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Add a drop shadow effect */
+    						}
+					body{
+						text-align: center;
+					}
+  				</style>
+				
+				<body>
+				<a href="payment.php" class="pay-now-button">Pay Now</a>
+				<body>
 			</div>
 		</div>
 		
