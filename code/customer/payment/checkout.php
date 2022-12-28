@@ -42,8 +42,8 @@ $post_data['ship_postcode'] = "1000";
 $post_data['ship_country'] = "Bangladesh";
 
 # OPTIONAL PARAMETERS
-$post_data['value_a'] = "ref001";
-$post_data['value_b '] = "ref002";
+$post_data['name'] = $_SESSION['name'];
+$post_data['f_name'] = $_SESSION['f_name'];
 $post_data['value_c'] = "ref003";
 $post_data['value_d'] = "ref004";
 

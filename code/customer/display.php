@@ -156,9 +156,9 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 
 				//$_SESSION['f_name'] = $first_name;
 
-				while($row=mysqli_fetch_array($result)){
-					if($n%2!=0)
-					{
+				// while($row=mysqli_fetch_array($result)){
+				// 	if($n%2!=0)
+				// 	{
 				?>
 				<tr class="text-error">
 					<th style="width:10px;"> <?php echo $row2['id'];?> </th>
