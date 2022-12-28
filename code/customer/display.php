@@ -29,7 +29,8 @@ mysqli_select_db($conn,"$db_name") or die("cannot select db");
 		$tname=$row['name'];
 	}
 	$result=mysqli_query($conn,$sql);
-	$sql="SELECT * from booked, route,schedule where booked.schedule_id=schedule.id AND schedule.route_id=route.id";
+	$schedule_id=$_SESSION['schedule'];
+	$sql="SELECT * from route, schedule where schedule.id=$schedule_id And schedule.route_id=route.id";
 	$result2=mysqli_query($conn,$sql);
 	$row2=mysqli_fetch_array($result2);
 			 if(!isset($_SESSION['name']))
@@ -171,25 +172,6 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 					<th style="width:100px;"> <?php echo $today; ?> </th>
 				</tr>
 				<?php 
-					}
-					else
-					{
-				?>
-				<tr class="text-error">
-					<th style="width:10px;"> <?php echo $row2['id'];?> </th>
-					<th style="width:50px;"> <?php echo $first_name;?></th>
-					<th style="width:100px;"> <?php echo $last_name;?></th>
-					<th style="width:150px;"> <?php echo $pnr;?></th>
-					<th style="width:10px;"> <?php echo $_SESSION['passenger_count'];?> </th>
-					<th style="width:100px;"> <?php echo $row2['date']; ?> </th>
-					<th style="width:100px;"> <?php echo $row2['start']; ?> </th>
-					<th style="width:100px;"> <?php echo $row2['stop']; ?> </th>
-					<th style="width:100px;"> <?php echo $today; ?> </th>
-				</tr>
-				<?php 
-					}
-					$n++;
-				}
 				?>
 				</table>
     			<style>
@@ -217,7 +199,7 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
         		<td>
 				<?php
   					  // Output the content here
-				  $schedule_id= $row2['schedule_id'];
+				  $schedule_id=$_SESSION['schedule'];
 				  $class_name= $_SESSION['class'];
 				  $sql="Select $class_name from schedule where id=$schedule_id";
 				  $result=mysqli_query($conn, $sql);
