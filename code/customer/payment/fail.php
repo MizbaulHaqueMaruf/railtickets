@@ -1,9 +1,13 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <body>
 
 <h1>Failure</h1>
-<p>My first paragraph.</p>
+<p>Payment failed.</p>
 
 </body>
 </html>

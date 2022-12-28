@@ -226,7 +226,8 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 				  echo '<br>'."Total number of passengers :".' '.$number_of_passengers.'<br>';
 				  echo '<br>'."Ticket fare (per person) :".' '.$seat_fare[$class_name].'<br>';
 				  echo '<br>'."Total amount :".' '.' '.' '.$number_of_passengers*$seat_fare[$class_name].'<br>';
-				  $_SESSION['total_fare']=$number_of_passengers*$seat_fare[$class_name];
+				  $price=$number_of_passengers*$seat_fare[$class_name];
+				  $_SESSION['total_fare']=$price;
 				?>
         	</td>
     		</tr>
@@ -263,7 +264,7 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
    				 }
 				</style>
 				<body>
-				<a href="payment/checkout.php?price=<?php echo $?>" class="pay-now-button">Pay Now</a>
+				<a href="payment/checkout.php?price=<?php echo $price?>" class="pay-now-button">Pay Now</a>
 				<body>
 			</div>
 		</div>

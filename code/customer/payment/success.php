@@ -1,19 +1,7 @@
 <?php
-
 session_start();
-if(isset($_SESSION['name'])){}
-	else{
-		header("location:customer-login.php");
-		
-	}
+require('../connection.php');
 ?>
-
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>success</h1>
-<p>My first paragraph.</p>
 
 <?php
 $val_id=urlencode($_POST['val_id']);
@@ -70,7 +58,7 @@ if($code == 200 && !( curl_errno($handle)))
 	$gw_version = $result->gw_version;
 
 
-	echo $amount;
+	echo $amount." ".$tran_id." ".$bank_tran_id." ".$card_type;
 
 } else {
 
@@ -78,5 +66,15 @@ if($code == 200 && !( curl_errno($handle)))
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Success</h1>
+<p>Payment Completed</p>
+
+
+
 </body>
 </html>
+
