@@ -43,7 +43,9 @@
   $row2=mysqli_fetch_assoc($result2);
 
   // Add the destination
+  $pdf->MultiCell(0, 0, 'Class: ' .$_SESSION['class'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
   $pdf->MultiCell(0, 0, 'From: ' .$row2['start'] . ' To: ' . $row2['stop'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
+  $pdf->MultiCell(0, 0,'PNR : '.$_SESSION['pnr'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
   $pdf->MultiCell(0, 0, "Total Amount to be paid: ".$_SESSION['total_fare'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
   // Output the PDF document as a string
    // Output the PDF to the browser
@@ -55,7 +57,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Reservation </title>
+	<title> Ticket Print </title>
 	<link rel="shortcut icon" href="images/favicon.png"></link>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,9 +137,6 @@
       <div style="top: 120px" >
 				<div align='center' style="margin-top: 120px; background: rgb(109,105,180);
 background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 18%, rgba(6,205,164,1) 100%, rgba(0,212,255,1) 100%);">
-<!-- Add a button to print the PDF -->
-<form action="printing_module.php" method="post">
-  <button type="submit" name="download_pdf">Download PDF</button>
 </form>
 <?php
     // Check if the download button was clicked
@@ -153,5 +152,9 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
     ini_set('display_errors', 1);
 ?>
 <iframe src="data:application/pdf;base64,<?php echo $pdfBase64; ?>" width="50%" height="500"></iframe>
+<!-- Add a button to print the PDF -->
+<form action="printing_module.php" method="post">
+  <button type="submit" name="download_pdf">Download PDF</button>
+</form>
 <!-- Add a script to print the PDF -->
 </html>
