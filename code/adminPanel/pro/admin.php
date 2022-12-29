@@ -228,7 +228,7 @@ $fullname =  "Admin";
                 include 'admin/route.php';
             elseif ($_GET['page'] == 'logout') {
                 @session_destroy();
-                echo "<script>alert('You are being logged out'); window.location='../pro/adminsignin.php';</script>";
+                echo "<script>alert('You are being logged out'); window.location='adminsignin.php';</script>";
                 exit;
             } elseif ($_GET['page'] == 'payment')
                 include 'admin/sales.php';
