@@ -156,9 +156,9 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 
 				//$_SESSION['f_name'] = $first_name;
 
-				while($row=mysqli_fetch_array($result)){
-					if($n%2!=0)
-					{
+				// while($row=mysqli_fetch_array($result)){
+				// 	if($n%2!=0)
+				// 	{
 				?>
 				<tr class="text-error">
 					<th style="width:10px;"> <?php echo $row2['id'];?> </th>
@@ -208,7 +208,8 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 				  echo '<br>'."Total number of passengers :".' '.$number_of_passengers.'<br>';
 				  echo '<br>'."Ticket fare (per person) :".' '.$seat_fare[$class_name].'<br>';
 				  echo '<br>'."Total amount :".' '.' '.' '.$number_of_passengers*$seat_fare[$class_name].'<br>';
-				  $_SESSION['total_fare']=$number_of_passengers*$seat_fare[$class_name];
+				  $price=$number_of_passengers*$seat_fare[$class_name];
+				  $_SESSION['total_fare']=$price;
 				?>
         	</td>
     		</tr>
@@ -245,13 +246,33 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
    				 }
 				</style>
 				<body>
-				<a href="payment/checkout.php?price=<?php echo $?>" class="pay-now-button">Pay Now</a>
+				<a href="payment/checkout.php?price=<?php echo $price?>" class="pay-now-button">Pay Now</a>
 				<body>
 			</div>
 		</div>
 		
 		
 	</div>
+
+    <!-- <script>
+	(function (window, document) {
+	var loader = function () {
+	    var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+	    script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
+	    tag.parentNode.insertBefore(script, tag);
+	};
+
+		window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+		})(window, document);
+	</script>
+
+	<button class="pay-now-button" id="sslczPayBtn"
+			token="if you have any token validation"
+			postdata="your javascript arrays or objects which requires in backend"
+			order= "$price";
+			endpoint="payment/checkout.php"> Pay Now
+	</button> -->
+
 </body>
 </html>	
 

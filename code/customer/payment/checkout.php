@@ -1,21 +1,17 @@
 <?php
 
 session_start();
-if(isset($_SESSION['name'])){}
-	else{
-		header("location:customer-login.php");
-		
-	}
+require('../connection.php');
 
 /* PHP */
 $post_data = array();
 $post_data['store_id'] = "railt63a8a33d4d01f";
 $post_data['store_passwd'] = "railt63a8a33d4d01f@ssl";
-$post_data['total_amount'] = "120";
+$post_data['total_amount'] = $_GET["price"];
 $post_data['currency'] = "BDT";
 $post_data['tran_id'] = "SSLCZ_TEST_".uniqid();
-$post_data['success_url'] = "http://www.railtickets.com/payment/success.php";
-$post_data['fail_url'] = "http://www.railtickets.com/payment/fail.php";
+$post_data['success_url'] = "http://www.railtickets.com/railtickets/code/customer/payment/success.php";
+$post_data['fail_url'] = "http://www.railtickets.com/railtickets/code/customer/payment/fail.php";
 $post_data['cancel_url'] = "http://localhost/new_sslcz_gw/cancel.php";
 # $post_data['multi_card_name'] = "mastercard,visacard,amexcard";  # DISABLE TO DISPLAY ALL AVAILABLE
 
@@ -46,10 +42,11 @@ $post_data['ship_postcode'] = "1000";
 $post_data['ship_country'] = "Bangladesh";
 
 # OPTIONAL PARAMETERS
-$post_data['value_a'] = "ref001";
-$post_data['value_b '] = "ref002";
-$post_data['value_c'] = "ref003";
-$post_data['value_d'] = "ref004";
+$post_data['name'] = $_SESSION['name'];
+// $post_data['f_name'] = $_SESSION['f_name'];
+// $post_data['passenger_count'] = $_SESSION['passenger_count'];
+// $post_data['schedule'] = $_SESSION['schedule'];
+// $post_data['pnr'] = $_SESSION['pnr'];
 
 # CART PARAMETERS
 $post_data['cart'] = json_encode(array(
@@ -103,4 +100,7 @@ if(isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL']!="" ) {
 } else {
 	echo "JSON Data parsing error!";
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
+

@@ -224,7 +224,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
     				if (isset($_POST['passenger_count'])) {
        				 // User has made a selection
       		    	  $selected_option = $_POST['passenger_count'];
-     			   for ($i = 1; $i <= 5; $i++) {
+     			   for ($i = 1; $i <= 3; $i++) {
             		if ($i == $selected_option) {
                			 // Output the selected option
                			 echo '<option value="' . $i . '" selected>' . $i . '</option>';
@@ -236,7 +236,7 @@ background: radial-gradient(circle, rgba(205,212,211,1) 100%, rgba(150,192,195,1
     				} else {
       				  // User has not made a selection
         			// Output nothing
-					for ($i = 1; $i <=5; $i++) {
+					for ($i = 1; $i <=3; $i++) {
 						// Output the selected option
 						echo '<option value="' . $i. '" selected>' . $i . '</option>';
 						}
