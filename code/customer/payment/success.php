@@ -6,49 +6,52 @@
 		header("../customer-login.php");
 		
 	}
+
+    header("location:../ticket.pdf");
+
 // Include the TCPDF library
-  require_once("../printit/tcpdf.php");
-  $seats=['1A','2A','3A','4A','5A','6A','7A'];
-  // Create a new PDF document
-  $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+//   require_once("../printit/tcpdf.php");
+//   $seats=['1A','2A','3A','4A','5A','6A','7A'];
+//   // Create a new PDF document
+//   $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
   
-  // Set the document metadata
-  $pdf->SetCreator(PDF_CREATOR);
-  $pdf->SetAuthor('Your Name');
-  $pdf->SetTitle('Ticket');
-  $pdf->SetSubject('Ticket');
-  $pdf->SetKeywords('ticket, PDF');
+//   // Set the document metadata
+//   $pdf->SetCreator(PDF_CREATOR);
+//   $pdf->SetAuthor('Your Name');
+//   $pdf->SetTitle('Ticket');
+//   $pdf->SetSubject('Ticket');
+//   $pdf->SetKeywords('ticket, PDF');
 
-  // Add a page
-  $pdf->AddPage();
+//   // Add a page
+//   $pdf->AddPage();
   
   
-  // Set the font and font size
-  $pdf->SetFont('helvetica', '', 14);
-  echo $_SESSION['name'];
-  // Add the passenger's name
-  $pdf->MultiCell(0, 0, 'Passenger: ' . $_SESSION['f_name'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0); //$_SESSION['f_name']
+//   // Set the font and font size
+//   $pdf->SetFont('helvetica', '', 14);
+//   echo $_SESSION['name'];
+//   // Add the passenger's name
+//   $pdf->MultiCell(0, 0, 'Passenger: ' . $_SESSION['f_name'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0); //$_SESSION['f_name']
 
-  // Add the seats
-  $seats_number=$_SESSION['passenger_count'];
-  $schedule_id=$_SESSION['schedule'];
-  for($i=0;$i<$seats_number;$i++)
-  $pdf->MultiCell(0, 0, 'Seats: ' .$seats[$i], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
-  $sql="Select route_id from schedule where id=$schedule_id";
-  $result=mysqli_query($conn,$sql);
-  $row=mysqli_fetch_assoc($result);
-  $route_id=$row['route_id'];
-  $sql2="Select * from route where id=$route_id";
-  $result2=mysqli_query($conn,$sql2);
-  $row2=mysqli_fetch_assoc($result2);
+//   // Add the seats
+//   $seats_number=$_SESSION['passenger_count'];
+//   $schedule_id=$_SESSION['schedule'];
+//   for($i=0;$i<$seats_number;$i++)
+//   $pdf->MultiCell(0, 0, 'Seats: ' .$seats[$i], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
+//   $sql="Select route_id from schedule where id=$schedule_id";
+//   $result=mysqli_query($conn,$sql);
+//   $row=mysqli_fetch_assoc($result);
+//   $route_id=$row['route_id'];
+//   $sql2="Select * from route where id=$route_id";
+//   $result2=mysqli_query($conn,$sql2);
+//   $row2=mysqli_fetch_assoc($result2);
 
-  // Add the destination
-  $pdf->MultiCell(0, 0, 'From: ' .$row2['start'] . ' To: ' . $row2['stop'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
-  $pdf->MultiCell(0, 0, "Total Amount paid: ".$_SESSION['total_fare'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
-  // Output the PDF document as a string
-   // Output the PDF to the browser
-   $pdfContent = $pdf->Output('my_pdf.pdf', 'S');
-   $pdfBase64 = base64_encode($pdfContent);
+//   // Add the destination
+//   $pdf->MultiCell(0, 0, 'From: ' .$row2['start'] . ' To: ' . $row2['stop'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
+//   $pdf->MultiCell(0, 0, "Total Amount paid: ".$_SESSION['total_fare'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0);
+//   // Output the PDF document as a string
+//    // Output the PDF to the browser
+//    $pdfContent = $pdf->Output('my_pdf.pdf', 'S');
+//    $pdfBase64 = base64_encode($pdfContent);
    // Save the PDF to a file
   // file_put_contents('my_pdf.pdf', $pdfContent);
 ?>
