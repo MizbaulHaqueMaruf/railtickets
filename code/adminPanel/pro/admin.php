@@ -150,7 +150,7 @@ $fullname =  "Admin";
 
                         </li> -->
 
-        <!-- *****           <li class="nav-item">
+                        <li class="nav-item">
                             <a href="admin.php?page=payment" class="nav-link      <?php
                                                                                     echo (@$_GET['page'] == 'payment') ? 'active' : '';
                                                                                     ?>">
@@ -159,7 +159,7 @@ $fullname =  "Admin";
                                     Payments
                                 </p>
                             </a>
-                        </li> -->
+                        </li> 
 
                         <!-- <li class="nav-item">
                             <a href="admin.php?page=feedback" class="nav-link      <?php
