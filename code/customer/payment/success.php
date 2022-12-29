@@ -25,7 +25,7 @@
   
   // Set the font and font size
   $pdf->SetFont('helvetica', '', 14);
-
+  echo $_SESSION['name'];
   // Add the passenger's name
   $pdf->MultiCell(0, 0, 'Passenger: ' . $_SESSION['f_name'], 0, 'L', 0, 1, '', '', true, 0, false, true, 0); //$_SESSION['f_name']
 
@@ -95,7 +95,7 @@
 			<?php
 			 if(isset($_SESSION['name']))
 			 {
-			 echo "Welcome,".$_SESSION['f_name']."&nbsp;&nbsp;&nbsp;<a href=\"logout.php\" class=\"btn btn-info\">Logout</a>";
+			 echo "Welcome,".$_SESSION['f_name']."&nbsp;&nbsp;&nbsp;<a href=\"../logout.php\" class=\"btn btn-info\">Logout</a>";
 			 }
 			 ?>
 			

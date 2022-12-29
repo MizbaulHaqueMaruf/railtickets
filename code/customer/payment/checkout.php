@@ -43,9 +43,10 @@ $post_data['ship_country'] = "Bangladesh";
 
 # OPTIONAL PARAMETERS
 $post_data['name'] = $_SESSION['name'];
-$post_data['f_name'] = $_SESSION['f_name'];
-$post_data['value_c'] = "ref003";
-$post_data['value_d'] = "ref004";
+// $post_data['f_name'] = $_SESSION['f_name'];
+// $post_data['passenger_count'] = $_SESSION['passenger_count'];
+// $post_data['schedule'] = $_SESSION['schedule'];
+// $post_data['pnr'] = $_SESSION['pnr'];
 
 # CART PARAMETERS
 $post_data['cart'] = json_encode(array(
@@ -102,3 +103,4 @@ if(isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL']!="" ) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
+
