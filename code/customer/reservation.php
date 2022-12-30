@@ -12,13 +12,17 @@ mysqli_select_db($conn,"$db_name") or die("cannot select db");
 $tostn = '';
 $fromstn = '';
 $doj = '';
-$sql2="Select Distinct start, stop from $tbl_name";
+$sql2="Select Distinct start from $tbl_name";
 $result=mysqli_query($conn,$sql2);
+$sql2="Select Distinct stop from $tbl_name";
+$result2=mysqli_query($conn,$sql2);
 $station_from=array();
 $station_to=array();
 while($row=mysqli_fetch_assoc($result)){
 		$station_from[]=$row['start'];
-		$station_to[]=$row['stop'];
+}
+while($row=mysqli_fetch_assoc($result2)){
+	$station_to[]=$row['stop'];
 }
 if(isset($_POST['from']) && isset($_POST['to']))
 {	$k=1;
