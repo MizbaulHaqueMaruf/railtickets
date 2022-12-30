@@ -203,28 +203,7 @@ background: linear-gradient(153deg, rgba(109,105,180,1) 0%, rgba(255,255,255,1) 
 						<option value="female">FEMALE</option>
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td > 4</td>
-					<td ><input type="text" name="name4" ></td>
-					<td ><input type="text" name="age4" class="input-small"></td>
-					<td ><select name="sex4" class="input-small">
-						<option value="male">MALE</option>
-						<option value="female">FEMALE</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td > 5</td>
-					<td ><input type="text" name="name5" ></td>
-					<td ><input type="text" name="age5" class="input-small"></td>
-					<td ><select name="sex5" class="input-small">
-						<option value="male">MALE</option>
-						<option value="female">FEMALE</option>
-						</select>
-					</td>
-				</tr>
-				
+			</tr>
 				<tr>
 					<td style="border-top:0px;"><input class="btn btn-info"type="submit" value="Submit" id="subb" ></td>
 					<td style="border-top:0px;"><input class="btn btn-info"type="reset" value="Reset"></td>
